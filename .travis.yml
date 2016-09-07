@@ -1,0 +1,25 @@
+sudo: false
+language: python
+python:
+  - "3.5"
+
+before_install:
+  - pip install -r test_requirements.txt
+  - pip install coveralls
+  - python setup.py sdist
+  - python setup.py bdist_wheel
+
+install:
+  - ls -1tr dist/*tar.gz | tail -n 1 | xargs pip install
+  - pip uninstall argunparse --yes
+  - ls -1tr dist/*.whl | tail -n 1 | xargs pip install
+  - pip uninstall argunparse --yes
+
+script:
+  - python -m unittest discover
+
+after_success:
+  - python -m pylint --output-format=colorized --unsafe-load-any-extension=y argunparse test || true
+  - python -m coverage run --branch --include="argunparse/*","test/*" -m unittest discover --verbose
+  - python -m coverage report --show-missing
+  - coveralls
