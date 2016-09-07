@@ -15,6 +15,18 @@ argunparse
     :target: https://coveralls.io/github/mbdevpl/argunparse?branch=master
     :alt: test coverage from Coveralls
 
+.. image:: https://landscape.io/github/mbdevpl/argunparse/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/mbdevpl/argunparse/master
+    :alt: code health from Landscape
+
+.. image:: https://codeclimate.com/github/mbdevpl/argunparse/badges/gpa.svg
+    :target: https://codeclimate.com/github/mbdevpl/argunparse
+    :alt: code GPA from Code Climate
+
+.. image:: https://codeclimate.com/github/mbdevpl/argunparse/badges/issue_count.svg
+    :target: https://codeclimate.com/github/mbdevpl/argunparse
+    :alt: issue count from Code Climate
+
 .. image:: https://img.shields.io/pypi/l/argunparse.svg
     :alt: license
 
