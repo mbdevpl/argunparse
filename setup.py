@@ -18,10 +18,11 @@ This is "setup.py" file for "argunparse".
 """
 
 import os
-import setuptools
 import shutil
 import sys
 import typing
+
+import setuptools
 
 from argunparse._version import VERSION as version
 
