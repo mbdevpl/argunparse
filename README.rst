@@ -11,21 +11,13 @@ argunparse
     :target: https://travis-ci.org/mbdevpl/argunparse
     :alt: build status from Travis CI
 
+.. image:: https://api.codacy.com/project/badge/Grade/fd6a7e9ac9324d9f9b5d1e77d10000e4
+    :target: https://www.codacy.com/app/mbdevpl/argunparse
+    :alt: grade from Codacy
+
 .. image:: https://codecov.io/gh/mbdevpl/argunparse/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/mbdevpl/argunparse
     :alt: test coverage from Codecov
-
-.. image:: https://landscape.io/github/mbdevpl/argunparse/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/mbdevpl/argunparse/master
-    :alt: code health from Landscape
-
-.. image:: https://codeclimate.com/github/mbdevpl/argunparse/badges/gpa.svg
-    :target: https://codeclimate.com/github/mbdevpl/argunparse
-    :alt: code GPA from Code Climate
-
-.. image:: https://codeclimate.com/github/mbdevpl/argunparse/badges/issue_count.svg
-    :target: https://codeclimate.com/github/mbdevpl/argunparse
-    :alt: issue count from Code Climate
 
 .. image:: https://img.shields.io/pypi/l/argunparse.svg
     :alt: license
