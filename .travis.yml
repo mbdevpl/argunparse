@@ -4,8 +4,7 @@ python:
   - "3.5"
 
 before_install:
-  - pip install -r test_requirements.txt
-  - pip install coveralls
+  - pip install -r dev_requirements.txt
   - python setup.py sdist
   - python setup.py bdist_wheel
 
@@ -22,7 +21,7 @@ after_success:
   - python -m pylint --output-format=colorized --unsafe-load-any-extension=y argunparse test || true
   - python -m coverage run --branch --include="argunparse/*","test/*" -m unittest discover --verbose
   - python -m coverage report --show-missing
-  - coveralls
+  - codecov
 
 notifications:
   slack:

@@ -1,4 +1,2 @@
-coverage
-pylint
 setuptools
 -rrequirements.txt

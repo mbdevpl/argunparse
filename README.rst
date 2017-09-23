@@ -11,9 +11,9 @@ argunparse
     :target: https://travis-ci.org/mbdevpl/argunparse
     :alt: build status from Travis CI
 
-.. image:: https://coveralls.io/repos/github/mbdevpl/argunparse/badge.svg?branch=master
-    :target: https://coveralls.io/github/mbdevpl/argunparse?branch=master
-    :alt: test coverage from Coveralls
+.. image:: https://codecov.io/gh/mbdevpl/argunparse/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/mbdevpl/argunparse
+    :alt: test coverage from Codecov
 
 .. image:: https://landscape.io/github/mbdevpl/argunparse/master/landscape.svg?style=flat
     :target: https://landscape.io/github/mbdevpl/argunparse/master

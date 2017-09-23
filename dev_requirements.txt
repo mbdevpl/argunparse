@@ -1,0 +1,5 @@
+codecov
+coverage
+pylint
+twine
+-rtest_requirements.txt
