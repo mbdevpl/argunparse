@@ -16,6 +16,10 @@ argunparse
     :target: https://travis-ci.org/mbdevpl/argunparse
     :alt: build status from Travis CI
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/argunparse?branch=master&svg=true
+    :target: https://ci.appveyor.com/project/mbdevpl/argunparse
+    :alt: build status from AppVeyor
+
 .. image:: https://api.codacy.com/project/badge/Grade/fd6a7e9ac9324d9f9b5d1e77d10000e4
     :target: https://www.codacy.com/app/mbdevpl/argunparse
     :alt: grade from Codacy
@@ -35,8 +39,9 @@ generating string of command-line arguments from a dict and/or a list.
 requirements
 ------------
 
-This package is intended for Python 3.5 and later. It was tested on 64 bit Ubuntu, but it might work
-on other systems too.
+Python >= 3.5.
+
+Tested on Linux, OS X and Windows.
 
 
 installation
@@ -46,7 +51,7 @@ For simplest installation use :bash:`pip`:
 
 .. code:: bash
 
-    pip3.5 install argunparse
+    pip3 install argunparse
 
 You can also build your own version:
 
