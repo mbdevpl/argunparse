@@ -1,5 +1,10 @@
+.. role:: bash(code)
+    :language: bash
 
-==========
+.. role:: python(code)
+    :language: python
+
+
 argunparse
 ==========
 
@@ -20,26 +25,20 @@ argunparse
     :alt: test coverage from Codecov
 
 .. image:: https://img.shields.io/pypi/l/argunparse.svg
+    :target: https://github.com/mbdevpl/argunparse/blob/master/NOTICE
     :alt: license
-
-.. role:: bash(code)
-    :language: bash
-
-.. role:: python(code)
-    :language: python
 
 The *argunparse* is intended to perform an approximate reverse of what *argparse* does. In short:
 generating string of command-line arguments from a dict and/or a list.
 
 
-------------
 requirements
 ------------
 
 This package is intended for Python 3.5 and later. It was tested on 64 bit Ubuntu, but it might work
 on other systems too.
 
-------------
+
 installation
 ------------
 
@@ -60,7 +59,6 @@ You can also build your own version:
     ls -1tr dist/*.whl | tail -n 1 | xargs pip3.5 install
 
 
------
 usage
 -----
 
@@ -86,7 +84,6 @@ Simple example of how *argunparse* works:
 for more examples see :bash:`examples.ipynb` notebook.
 
 
------
 links
 -----
 

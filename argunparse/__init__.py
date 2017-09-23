@@ -1,5 +1,4 @@
-"""
-This is "__init__.py" file for "argunparse" package.
+"""This is "__init__.py" file for "argunparse" package.
 
 classes: ArgumentUnparser
 """

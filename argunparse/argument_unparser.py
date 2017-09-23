@@ -1,6 +1,4 @@
-"""
-class: ArgumentUnparser
-"""
+"""class: ArgumentUnparser"""
 
 import collections
 import logging
@@ -10,13 +8,12 @@ if __debug__:
     _LOG = logging.getLogger(__name__)
 
 class ArgumentUnparser:
-    """
-    For performing reverse operation to what argparse.ArgumentParser does.
-    """
+
+    """For performing reverse operation to what argparse.ArgumentParser does."""
 
     def __init__(
-        self, short_arg: str='-', long_arg: str='--', arg_value='=',
-        begin_delim: str='"', end_delim: str='"') -> None:
+            self, short_arg: str = '-', long_arg: str = '--', arg_value: str = '=',
+            begin_delim: str = '"', end_delim: str = '"') -> None:
 
         assert isinstance(short_arg, str)
         assert isinstance(long_arg, str)
@@ -31,15 +28,13 @@ class ArgumentUnparser:
         self._end_delim = end_delim
 
     def _unparse_arg(self, arg: str) -> str:
-
         assert isinstance(arg, str), arg
 
         if ' ' in arg:
             return '{}{}{}'.format(self._begin_delim, arg, self._end_delim)
         return arg
-    
-    def _unparse_flag(self, key: str, value: typing.Optional[str]) -> str:
 
+    def _unparse_flag(self, key: str, value: typing.Optional[str]) -> str:
         assert isinstance(key, str) and len(key) > 0, key
         assert value is None or (isinstance(value, str) and len(value) > 0), value
 
@@ -50,12 +45,10 @@ class ArgumentUnparser:
     def unparse_args(
             self, flags: typing.Mapping[str, typing.Union[bool, int, float, str]]={},
             args: typing.Sequence[str]=[]) -> str:
-        """
-        Convert dictionary and list to command-line args.
+        """Convert dictionary and list to command-line args.
 
         This process is a reverse of what built-in argparse module does with parse_args() method.
         """
-
         assert isinstance(flags, collections.abc.Mapping)
         assert isinstance(args, collections.abc.Iterable)
 

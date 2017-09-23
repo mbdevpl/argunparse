@@ -1,6 +1,4 @@
-"""
-This is "setup.py" file for "argunparse".
-"""
+"""This is "setup.py" file for "argunparse"."""
 
 import os
 import shutil
