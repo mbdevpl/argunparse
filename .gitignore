@@ -1,16 +1,23 @@
+# Eclipse
+/.settings
+/.*project
+
+# Jupyter Notebook
+/.ipynb_checkpoints
+*-checkpoint.ipynb
+
+# Python
 /build
 /dist
-/htmlcov
-/examples.py
-
-# temporary files
+/.cache
 __pycache__
 *.egg
 *.egg-info
 *.pyc
-*-checkpoint.ipynb
-/.project
-/.pydevproject
-/.cache
+
+# Python coverage
+/htmlcov
 /.coverage
-/.ipynb_checkpoints
+
+# other
+/examples.py
