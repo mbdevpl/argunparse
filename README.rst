@@ -78,7 +78,7 @@ Simple example of how *argunparse* works:
         }
 
     unparser = argunparse.ArgumentUnparser()
-    print(unparser.unparse_args(options, args))
+    print(unparser.unparse(*args, **options))
 
 for more examples see `<examples.ipynb>`_ notebook.
 
