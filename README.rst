@@ -41,6 +41,10 @@ requirements
 
 Python >= 3.5.
 
+No other runtime dependencies.
+
+However, building and running tests requires packages listed in `<test_requirements.txt>`_.
+
 Tested on Linux, OS X and Windows.
 
 
@@ -53,16 +57,6 @@ For simplest installation use :bash:`pip`:
 
     pip3 install argunparse
 
-You can also build your own version:
-
-.. code:: bash
-
-    git clone https://github.com/mbdevpl/argunparse
-    cd argunparse
-    python3.5 -m unittest discover # make sure the tests pass
-    python3.5 setup.py bdist_wheel
-    ls -1tr dist/*.whl | tail -n 1 | xargs pip3.5 install
-
 
 usage
 -----
@@ -73,7 +67,7 @@ Simple example of how *argunparse* works:
 
     import argunparse
 
-    flags = {
+    options = {
         'v': True,
         'long-flag': True,
         'o': 'out_file.txt',
@@ -84,9 +78,9 @@ Simple example of how *argunparse* works:
         }
 
     unparser = argunparse.ArgumentUnparser()
-    print(unparser.unparse_args(flags, args))
+    print(unparser.unparse_args(options, args))
 
-for more examples see :bash:`examples.ipynb` notebook.
+for more examples see `<examples.ipynb>`_ notebook.
 
 
 links
