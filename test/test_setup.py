@@ -11,7 +11,7 @@ import tempfile
 import typing as t
 import unittest
 
-__updated__ = '2017-09-23'
+__updated__ = '2017-09-25'
 
 
 def run_program(*args, glob: bool = False):
@@ -156,8 +156,7 @@ class UnitTests(unittest.TestCase):
         parse_requirements = import_module_member('setup_boilerplate', 'parse_requirements')
         results = parse_requirements()
         self.assertIsInstance(results, list)
-        for result in results:
-            self.assertIsInstance(result, str)
+        self.assertTrue(all(isinstance(result, str) for result in results), msg=results)
 
     def test_parse_reqs_empty(self):
         parse_requirements = import_module_member('setup_boilerplate', 'parse_requirements')
