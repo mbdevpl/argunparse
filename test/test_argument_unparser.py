@@ -1,4 +1,3 @@
-
 """Tests for ArgumentUnparser class."""
 
 import itertools
@@ -15,6 +14,19 @@ _LOG = logging.getLogger(__name__)
 
 
 class Tests(unittest.TestCase):
+
+    #validator_cmd = [sys.executable, str(pathlib.Path('argunparse', 'dynamic_argument_parser.py'))]
+
+    def assert_unparsed_correctly(self, options, arguments, result):
+        _LOG.debug('validating unparsing of options: %s and arguments: %s', options, arguments)
+        #_LOG.debug('unparsing result: %s', result)
+        self.assertIsInstance(result, str, msg=(options, arguments, result))
+        #process = subprocess.run(' '.join(self.validator_cmd + [result]), shell=True,
+        #                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        #self.assertEqual(process.returncode, 0, msg=(options, arguments, result, process))
+        #reparsed = ast.literal_eval(process.stdout.decode().strip())
+        #_LOG.debug('reparsed result into: %s', reparsed)
+        #namespace = runpy.run_module(mod_name, init_globals, run_name, alter_sys)
 
     def test_construct(self):
         unparser = ArgumentUnparser()
