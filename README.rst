@@ -36,6 +36,35 @@ The *argunparse* is intended to perform an approximate reverse of what *argparse
 generating string of command-line arguments from a dict and/or a list.
 
 
+how to use
+----------
+
+Simple example of how *argunparse* works:
+
+.. code:: python
+
+    import argunparse
+
+    options = {
+        'v': True,
+        'long-flag': True,
+        'o': 'out_file.txt',
+        'log': 'log_file.txt'
+        }
+    args = {
+        'in_file.txt'
+        }
+
+    unparser = argunparse.ArgumentUnparser()
+    print(unparser.unparse(*args, **options))
+    # -v --long-flag -o=out_file.txt --log=log_file.txt in_file.txt
+
+    print(unparser.unparse_to_list(*args, **options))
+    # ['-v', '--long-flag', '-o=out_file.txt', '--log=log_file.txt', 'in_file.txt']
+
+for more examples see `<examples.ipynb>`_ notebook.
+
+
 requirements
 ------------
 
@@ -56,32 +85,6 @@ For simplest installation use :bash:`pip`:
 .. code:: bash
 
     pip3 install argunparse
-
-
-usage
------
-
-Simple example of how *argunparse* works:
-
-.. code:: python
-
-    import argunparse
-
-    options = {
-        'v': True,
-        'long-flag': True,
-        'o': 'out_file.txt',
-        'log': 'log_file.txt'
-        }
-    args = {
-        'in_file.txt'
-        }
-
-    unparser = argunparse.ArgumentUnparser()
-    print(unparser.unparse(*args, **options))
-
-for more examples see `<examples.ipynb>`_ notebook.
-
 
 links
 -----
