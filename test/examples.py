@@ -1,5 +1,6 @@
 """Examples for tests of argunparse."""
 
+import collections
 import itertools
 import pathlib
 
@@ -8,18 +9,35 @@ _UNPARSER_INIT_ARGS_EXAMPLES = [
     ('long_opt', {'-', '--', '_', '__'}),
     ('opt_value', {'=', ' ', ''})]
 
-OPTIONS_EXAMPLES = {
-    'h': True, 'help': True, 'v': True, 'version': True, 'verbosity': 100, 'output': 'stdout',
-    'DEFINE': 'NDEBUG', 'long-flag': True, 'o': 'out_file.txt', 'log': 'log_file.txt',
-    'what': 'is that', 'skipped': False}
+OPTIONS = {
+    '-h': {'h': True}, '--help': {'help': True}, '--verbosity=100': {'verbosity': 100},
+    '--output=stdout': {'output': 'stdout'}, '--DEFINE=NDEBUG': {'DEFINE': 'NDEBUG'},
+    '--long-flag': {'long-flag': True}, '-o=out_file.txt': {'o': 'out_file.txt'},
+    '--log=log_file.txt': {'log': 'log_file.txt'}, "--what='is that'": {'what': 'is that'},
+    '''--extra_args="ok 'well' yeah"''': {'extra_args': "ok 'well' yeah"}}
 
-ARGUMENTS_EXAMPLES = {
-    'my_output_file.txt', 'C:\\Users\\user\\', '/home/user/Desktop', 'install', 'read', 'OutFile',
-    0, 3.1415, True, False, None, pathlib.Path('tmp', 'file'),
-    'in_file.txt', -123456790, 2**16, 'x', 'y', 'z', 'hello world'}
+OPTIONS_VARIANTS = [
+    ([ref1, ref2], collections.OrderedDict(itertools.chain(opt1.items(), opt2.items())))
+    for ((ref1, opt1), (ref2, opt2)) in itertools.permutations(OPTIONS.items(), 2)]
 
-OPTIONS_VARIANTS = list(dict(_) for _ in itertools.permutations(OPTIONS_EXAMPLES.items(), 2))
+OPTIONS_SKIPPED = {'skipped': False, 'e': False}
 
-ARGUMENTS_VARIANTS = list(itertools.permutations(ARGUMENTS_EXAMPLES, 2))
+OPTIONS_SKIPPED_VARIANTS = [
+    (['-v'], collections.OrderedDict([('v', True), ('skipped', False), ('e', False)])),
+    (['--help'], collections.OrderedDict([('skipped', False), ('help', True), ('e', False)])),
+    ([], collections.OrderedDict([('skipped', False), ('e', False)]))]
+
+ARGUMENTS = {
+    ('my_output_file.txt', 'my_output_file.txt'), ('C:\\Users\\user\\', 'C:\\Users\\user\\'),
+    ('/home/user/Desktop', '/home/user/Desktop'), ('OutFile', 'OutFile'), ('0', 0), ('""', ''),
+    ('3.1415', 3.1415), ('True', True), ('False', False), ('None', None),
+    (str(pathlib.Path('tmp', 'file')), pathlib.Path('tmp', 'file')), ('in_file.txt', 'in_file.txt'),
+    ('-123456790', -123456790), (str(2**16), 2**16), ('x', 'x'), ('y', 'y'), ('z', 'z'),
+    (repr('hello world'), 'hello world')}
+
+ARGUMENTS_SKIPPED = {}
+
+ARGUMENTS_VARIANTS = [([ref1, ref2], [arg1, arg2])
+                      for ((ref1, arg1), (ref2, arg2)) in itertools.permutations(ARGUMENTS, 2)]
 
 OPTIONS_AND_ARGUMENTS_VARIANTS = list(itertools.product(OPTIONS_VARIANTS, ARGUMENTS_VARIANTS))

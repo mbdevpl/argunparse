@@ -1,6 +1,5 @@
 """class: ArgumentUnparser"""
 
-import collections
 import typing as t
 
 
@@ -30,44 +29,83 @@ class ArgumentUnparser:
             arg = str(arg)
         if ' ' in arg:
             arg = repr(arg)
+        if not arg:
+            arg = '""'
         return arg
 
-    def unparse_args(
-            self, arguments: t.Sequence[t.Any]) -> str:
+    def unparse_args(self, arguments: t.Sequence[t.Any], *, to_list: bool = False) -> str:
         """Convert list to string of command-line args."""
         unparsed = []
         for arg in arguments:
             unparsed.append(self.unparse_arg(arg))
+        if to_list:
+            return unparsed
         return ' '.join(unparsed)
 
-    def unparse_option(self, key: str, value: t.Optional[str]) -> str:
+    def unparse_option(self, key: str, value: t.Any, *, to_list: bool = False) -> str:
         """Convert a key-value pair into a string that can be used as a command-line option."""
-        return '{}{}{}'.format(
-            self._long_opt if len(key) > 1 else self._short_opt, key,
-            '' if value is None else (self._opt_value + self.unparse_arg(value)))
+        if value is False:
+            return [] if to_list else ''
+        unparsed_key = '{}{}'.format(self._long_opt if len(key) > 1 else self._short_opt, key)
+        if value is not True:
+            unparsed_value = self.unparse_arg(value)
+        if to_list and (self._opt_value == ' ' or value is True):
+            if value is True:
+                return [unparsed_key]
+            return [unparsed_key, unparsed_value]
+        if value is not True:
+            unparsed_option = '{}{}{}'.format(unparsed_key, self._opt_value, unparsed_value)
+        if to_list:
+            return [unparsed_option]
+        if value is True:
+            return unparsed_key
+        return unparsed_option
 
-    def unparse_options(self, options: t.Mapping[str, t.Any]) -> str:
+    def unparse_options(self, options: t.Mapping[str, t.Any], *, to_list: bool = False) -> str:
         """Convert dictionary to string of command-line args."""
         unparsed = []
         for key, value in options.items():
-            if isinstance(value, bool):
-                if value:
-                    unparsed.append(self.unparse_option(key, None))
+            if value is False:  # isinstance(value, bool) and not value:
+                continue
+            unparsed_option = self.unparse_option(key, value, to_list=to_list)
+            if to_list:
+                unparsed += unparsed_option
             else:
-                unparsed.append(self.unparse_option(key, value))
+                unparsed.append(unparsed_option)
+        if to_list:
+            return unparsed
         return ' '.join(unparsed)
 
-    def unparse_options_and_args(
-            self, options: t.Mapping[str, t.Any], arguments: t.Sequence[t.Any]) -> str:
+    def unparse_options_and_args(self, options: t.Mapping[str, t.Any], arguments: t.Sequence[t.Any],
+                                 *, to_list: bool = False) -> str:
         """Convert dictionary and list to string of command-line args."""
+        if options is None:
+            unparsed_options = [] if to_list else ''
+        else:
+            unparsed_options = self.unparse_options(options, to_list=to_list)
+        if arguments is None:
+            unparsed_args = [] if to_list else ''
+        else:
+            unparsed_args = self.unparse_args(arguments, to_list=to_list)
+        if to_list:
+            return unparsed_options + unparsed_args
         unparsed = []
-        if options is not None:
-            unparsed.append(self.unparse_options(options))
-        if arguments is not None:
-            unparsed.append(self.unparse_args(arguments))
+        if unparsed_options:
+            unparsed.append(unparsed_options)
+        if unparsed_args:
+            unparsed.append(unparsed_args)
         return ' '.join(unparsed)
 
-    def unparse(self, *args, **kwargs):
+    def unparse_to_list(self, *args, **kwargs) -> list:
+        """Unparse given args as command-line arguments and kwargs as command-line options.
+
+        Output is a list of strings.
+
+        This process is a reverse of what built-in argparse module does with parse_args() method.
+        """
+        return self.unparse_options_and_args(kwargs, args, to_list=True)
+
+    def unparse(self, *args, **kwargs) -> str:
         """Unparse given args as command-line arguments and kwargs as command-line options.
 
         This process is a reverse of what built-in argparse module does with parse_args() method.
