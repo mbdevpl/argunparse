@@ -11,7 +11,7 @@ class Package(setup_boilerplate.Package):
     description = 'argunparse is intended to perform approximate reverse of argparse'
     download_url = 'https://github.com/mbdevpl/argunparse'
     classifiers = [
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
@@ -25,7 +25,7 @@ class Package(setup_boilerplate.Package):
         'Topic :: Scientific/Engineering',
         'Topic :: Utilities'
         ]
-    keywords = ['argparse', 'unparsing', 'pretty printing']
+    keywords = ['argparse', 'commandline arguments', 'pretty printing', 'unparsing']
 
 
 if __name__ == '__main__':
