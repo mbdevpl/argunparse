@@ -10,10 +10,10 @@ matrix:
       python: "3.6"
     - os: osx
       language: generic
-      env: TRAVIS_PYTHON_VERSION="3.5.3"
+      env: TRAVIS_PYTHON_VERSION="3.5.5"
     - os: osx
       language: generic
-      env: TRAVIS_PYTHON_VERSION="3.6.1"
+      env: TRAVIS_PYTHON_VERSION="3.6.4"
 
 before_install:
   - |
