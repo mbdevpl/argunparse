@@ -3,6 +3,7 @@
 
 import itertools
 import logging
+import sys
 import unittest
 
 from argunparse.argument_unparser import ArgumentUnparser
@@ -110,10 +111,15 @@ class Tests(unittest.TestCase):
         for (reference_options, options), (reference_args, args) in OPTIONS_AND_ARGUMENTS_VARIANTS:
             with self.subTest(options=options, args=args):
                 result = unparser.unparse(*args, **options)
-                self.assertEqual(
-                    ' '.join(itertools.chain(reference_options, reference_args)), result)
+                for item in itertools.chain(reference_options, reference_args):
+                    self.assertIn(item, result)
+                if sys.version_info[:2] >= (3, 6):
+                    self.assertEqual(
+                        ' '.join(itertools.chain(reference_options, reference_args)), result)
                 list_result = unparser.unparse_to_list(*args, **options)
-                self.assertListEqual(reference_options + reference_args, list_result)
+                self.assertSetEqual(set(reference_options + reference_args), set(list_result))
+                if sys.version_info[:2] >= (3, 6):
+                    self.assertListEqual(reference_options + reference_args, list_result)
 
     def test_unparse_nothing(self):
         unparser = ArgumentUnparser()
