@@ -33,7 +33,7 @@ argunparse
     :alt: license
 
 The *argunparse* is intended to perform an approximate reverse of what *argparse* does. In short:
-generating string of command-line arguments from a dict and/or a list.
+generating string (or a list of strings) of command-line arguments from a dict and/or a list.
 
 
 how to use
