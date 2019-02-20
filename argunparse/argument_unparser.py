@@ -3,10 +3,19 @@
 import typing as t
 
 
+def treat_as_option_with_no_value(value: t.Any) -> bool:
+    return value is True
+
+
+def option_should_be_skipped(value: t.Any) -> bool:
+    return value is False
+
+
 class ArgumentUnparser:
 
     """For performing reverse operation to what argparse.ArgumentParser does."""
 
+    # pylint: disable=too-many-arguments
     def __init__(
             self, short_opt: str = '-', long_opt: str = '--', opt_value: str = '=',
             begin_delim: str = '"', end_delim: str = '"') -> None:
@@ -44,20 +53,20 @@ class ArgumentUnparser:
 
     def unparse_option(self, key: str, value: t.Any, *, to_list: bool = False) -> str:
         """Convert a key-value pair into a string that can be used as a command-line option."""
-        if value is False:
+        if option_should_be_skipped(value):
             return [] if to_list else ''
         unparsed_key = '{}{}'.format(self._long_opt if len(key) > 1 else self._short_opt, key)
-        if value is not True:
+        if not treat_as_option_with_no_value(value):
             unparsed_value = self.unparse_arg(value)
-        if to_list and (self._opt_value == ' ' or value is True):
-            if value is True:
+        if to_list and (self._opt_value == ' ' or treat_as_option_with_no_value(value)):
+            if treat_as_option_with_no_value(value):
                 return [unparsed_key]
             return [unparsed_key, unparsed_value]
-        if value is not True:
+        if not treat_as_option_with_no_value(value):
             unparsed_option = '{}{}{}'.format(unparsed_key, self._opt_value, unparsed_value)
         if to_list:
             return [unparsed_option]
-        if value is True:
+        if treat_as_option_with_no_value(value):
             return unparsed_key
         return unparsed_option
 
@@ -65,7 +74,7 @@ class ArgumentUnparser:
         """Convert dictionary to string of command-line args."""
         unparsed = []
         for key, value in options.items():
-            if value is False:  # isinstance(value, bool) and not value:
+            if option_should_be_skipped(value):
                 continue
             unparsed_option = self.unparse_option(key, value, to_list=to_list)
             if to_list:
