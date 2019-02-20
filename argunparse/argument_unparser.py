@@ -42,7 +42,8 @@ class ArgumentUnparser:
             arg = '""'
         return arg
 
-    def unparse_args(self, arguments: t.Sequence[t.Any], *, to_list: bool = False) -> str:
+    def unparse_args(self, arguments: t.Sequence[t.Any],
+                     *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert list to string of command-line args."""
         unparsed = []
         for arg in arguments:
@@ -51,7 +52,8 @@ class ArgumentUnparser:
             return unparsed
         return ' '.join(unparsed)
 
-    def unparse_option(self, key: str, value: t.Any, *, to_list: bool = False) -> str:
+    def unparse_option(self, key: str, value: t.Any,
+                       *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert a key-value pair into a string that can be used as a command-line option."""
         if option_should_be_skipped(value):
             return [] if to_list else ''
@@ -70,7 +72,8 @@ class ArgumentUnparser:
             return unparsed_key
         return unparsed_option
 
-    def unparse_options(self, options: t.Mapping[str, t.Any], *, to_list: bool = False) -> str:
+    def unparse_options(self, options: t.Mapping[str, t.Any],
+                        *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert dictionary to string of command-line args."""
         unparsed = []
         for key, value in options.items():
@@ -86,7 +89,7 @@ class ArgumentUnparser:
         return ' '.join(unparsed)
 
     def unparse_options_and_args(self, options: t.Mapping[str, t.Any], arguments: t.Sequence[t.Any],
-                                 *, to_list: bool = False) -> str:
+                                 *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert dictionary and list to string of command-line args."""
         if options is None:
             unparsed_options = [] if to_list else ''
