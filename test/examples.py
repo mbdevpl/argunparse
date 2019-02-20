@@ -23,9 +23,9 @@ OPTIONS_VARIANTS = [
 OPTIONS_SKIPPED = {'skipped': False, 'e': False}
 
 OPTIONS_SKIPPED_VARIANTS = [
-    (['-v'], collections.OrderedDict([('v', True), ('skipped', False), ('e', False)])),
+    (['-v'], collections.OrderedDict([('v', True), ('skipped', None), ('e', False)])),
     (['--help'], collections.OrderedDict([('skipped', False), ('help', True), ('e', False)])),
-    ([], collections.OrderedDict([('skipped', False), ('e', False)]))]
+    ([], collections.OrderedDict([('skipped', False), ('e', None)]))]
 
 ARGUMENTS = {
     ('my_output_file.txt', 'my_output_file.txt'), ('C:\\Users\\user\\', 'C:\\Users\\user\\'),

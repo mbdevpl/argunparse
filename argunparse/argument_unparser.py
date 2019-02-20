@@ -8,7 +8,7 @@ def treat_as_option_with_no_value(value: t.Any) -> bool:
 
 
 def option_should_be_skipped(value: t.Any) -> bool:
-    return value is False
+    return value is False or value is None
 
 
 class ArgumentUnparser:

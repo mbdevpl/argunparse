@@ -48,6 +48,8 @@ Simple example of how *argunparse* works:
     options = {
         'v': True,
         'long-flag': True,
+        'ignored': False,
+        'also-ignored': None,
         'o': 'out_file.txt',
         'log': 'log_file.txt'
         }
@@ -62,7 +64,14 @@ Simple example of how *argunparse* works:
     print(unparser.unparse_to_list(*args, **options))
     # ['-v', '--long-flag', '-o=out_file.txt', '--log=log_file.txt', 'in_file.txt']
 
-for more examples see `<examples.ipynb>`_ notebook.
+Special option values are:
+
+*   :python:`True` -- option will be treated as a flag;
+*   :python:`False` and :python:`None`  -- option will be ignored.
+
+All other values will be converted to strings using :python:`str()`.
+
+For more examples see `<examples.ipynb>`_ notebook.
 
 
 requirements
