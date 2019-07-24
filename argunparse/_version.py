@@ -1,3 +1,5 @@
-"""This file defines the version of "argunparse" package."""
+"""Version of argunparse package."""
 
-VERSION = '0.1.1'
+from version_query import predict_version_str
+
+VERSION = predict_version_str()
