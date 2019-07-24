@@ -9,6 +9,7 @@ from argunparse.argument_unparser import ArgumentUnparser
 from .examples import \
     OPTIONS, OPTIONS_VARIANTS, OPTIONS_SKIPPED, OPTIONS_SKIPPED_VARIANTS, \
     ARGUMENTS, ARGUMENTS_VARIANTS, OPTIONS_AND_ARGUMENTS_VARIANTS
+from .adapting_argparse import AdaptingArgumentParser, namespace_to_options_and_args
 
 _LOG = logging.getLogger(__name__)
 
@@ -137,3 +138,27 @@ class Tests(unittest.TestCase):
         unparser = ArgumentUnparser()
         self.assertEqual(unparser.unparse(), '')
         self.assertEqual(unparser.unparse_to_list(), [])
+
+    def test_incorrectly_escaped(self):
+        unparser = ArgumentUnparser()
+        unparsed = unparser.unparse_arg('''" please"escape "''')
+        self.assertEqual(unparsed, '''"\\" please\\"escape \\""''')
+        unparsed = unparser.unparse_arg('''" please\\"escape "''')
+        self.assertEqual(unparsed, '''"\\" please\\\\"escape \\""''')
+        unparsed = unparser.unparse_arg('''\\ please\\"keep\\ ''')
+        self.assertEqual(unparsed, '''\\ please\\"keep\\ ''')
+
+    def test_roundtrip(self):
+        unparser = ArgumentUnparser()
+        for (_, options), (_, args) in OPTIONS_AND_ARGUMENTS_VARIANTS:
+                parser = AdaptingArgumentParser(add_help=False)
+            #with self.subTest(options=options, args=args):
+                list_result = unparser.unparse_to_list(*args, **options)
+                if any('has_newline' in _ for _ in list_result):
+                    continue
+                namespace = parser.parse_args(list_result)
+                new_options, new_args = namespace_to_options_and_args(namespace)
+                # self.assertCountEqual(new_args, args)
+                # self.assertDictEqual(new_options, options)
+                new_result = unparser.unparse_to_list(*new_args, **new_options)
+                self.assertCountEqual(new_result, list_result)

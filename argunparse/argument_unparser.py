@@ -1,5 +1,6 @@
 """Argument unparser."""
 
+import io
 import logging
 import typing as t
 
@@ -16,34 +17,78 @@ def option_should_be_skipped(value: t.Any) -> bool:
     return value is False or value is None
 
 
+def _are_all_instances_escaped(text: str, char: str) -> bool:
+    if char not in text:
+        return True
+    if text.startswith(char):
+        return False
+    index = 1
+    while True:
+        try:
+            index = text.index(char, index)
+        except ValueError:
+            return True
+        if text[index - 1] != '\\':
+            return False
+        index += 1
+    return True
+
+
+def _escape_all(text: str, escaped_chars: str) -> str:
+    sio = io.StringIO()
+    for i, char in enumerate(text):
+        # for char in text:
+        if char == '\\' and (i == len(text) - 1 or text[i + 1] not in escaped_chars):
+            sio.write('\\\\')
+            # _LOG.warning('escaped \\')
+        if char in escaped_chars:
+            sio.write('\\{}'.format(char))
+            # _LOG.warning('escaped "')
+        else:
+            sio.write(char)
+    return sio.getvalue()
+
+
+_ESCAPED_CHARS = (' ', '\t', '\n', "'", '"')
+
+
 class ArgumentUnparser:
     """For performing reverse operation to what argparse.ArgumentParser does."""
 
     # pylint: disable=too-many-arguments
     def __init__(
             self, short_opt: str = '-', long_opt: str = '--', opt_value: str = '=',
-            begin_delim: str = '"', end_delim: str = '"') -> None:
+            value_delim: str = '"') -> None:
 
         assert isinstance(short_opt, str)
         assert isinstance(long_opt, str)
         assert isinstance(opt_value, str)
-        assert isinstance(begin_delim, str)
-        assert isinstance(end_delim, str)
+        assert isinstance(value_delim, str)
 
         self._short_opt = short_opt
         self._long_opt = long_opt
         self._opt_value = opt_value
-        self._begin_delim = begin_delim
-        self._end_delim = end_delim
+        self._value_delim = value_delim
+
+    def _should_be_escaped(self, text: str) -> bool:
+        if text.startswith(self._short_opt) or text.startswith(self._long_opt) \
+                or '\\' in text:
+            return True
+        for char in _ESCAPED_CHARS:
+            if not _are_all_instances_escaped(text, char):
+                return True
+        return False
 
     def unparse_arg(self, arg: t.Any) -> str:  # pylint: disable = no-self-use
         """Convert an object into a string that can be used as a command-line argument."""
         if not isinstance(arg, str):
             arg = str(arg)
-        if ' ' in arg:
-            arg = repr(arg)
+        if self._should_be_escaped(arg):
+            if self._value_delim in arg:
+                arg = _escape_all(arg, self._value_delim)
+            arg = '{delim}{arg}{delim}'.format(arg=arg, delim=self._value_delim)
         if not arg:
-            arg = '""'
+            arg = '{delim}{delim}'.format(delim=self._value_delim)
         return arg
 
     def unparse_args(self, arguments: t.Sequence[t.Any],
