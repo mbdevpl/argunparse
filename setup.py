@@ -9,7 +9,7 @@ class Package(setup_boilerplate.Package):
 
     name = 'argunparse'
     description = 'argunparse is intended to perform approximate reverse of argparse'
-    download_url = 'https://github.com/mbdevpl/argunparse'
+    url = 'https://github.com/mbdevpl/argunparse'
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',

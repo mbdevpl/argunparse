@@ -1,5 +1,5 @@
 docutils
-pip >= 9.0
-setuptools >= 20.5
+pip >= 10.0
+setuptools >= 41.0
 wheel
 -rrequirements.txt
