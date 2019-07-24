@@ -36,7 +36,7 @@ before_install:
 
 install:
   - pip install -U pip
-  - pip install -U -r dev_requirements.txt
+  - pip install -U -r ci_requirements.txt
 
 script:
   - TEST_PACKAGING=1 python -m coverage run --branch --source . -m unittest discover --verbose
@@ -44,7 +44,6 @@ script:
 after_success:
   - python -m coverage report --show-missing
   - codecov
-  - python -m pylint --load-plugins=pylint.extensions.mccabe --docstring-min-length 5 --no-docstring-rgx "^(test)?_|.*Tests$" --unsafe-load-any-extension y --output-format colorized  --reports y $(find . -name "*.py")
 
 notifications:
   slack:
