@@ -8,6 +8,8 @@
 argunparse
 ==========
 
+Reversed argparse: generate string of command-line args from Python objects.
+
 .. image:: https://img.shields.io/pypi/v/argunparse.svg
     :target: https://pypi.python.org/pypi/argunparse
     :alt: package version from PyPI
@@ -28,7 +30,7 @@ argunparse
     :target: https://codecov.io/gh/mbdevpl/argunparse
     :alt: test coverage from Codecov
 
-.. image:: https://img.shields.io/pypi/l/argunparse.svg
+.. image:: https://img.shields.io/github/license/mbdevpl/argunparse.svg
     :target: https://github.com/mbdevpl/argunparse/blob/master/NOTICE
     :alt: license
 
@@ -67,7 +69,7 @@ Simple example of how *argunparse* works:
 Special option values are:
 
 *   :python:`True` -- option will be treated as a flag;
-*   :python:`False` and :python:`None`  -- option will be ignored.
+*   :python:`False` and :python:`None` -- option will be ignored.
 
 All other values will be converted to strings using :python:`str()`.
 
@@ -77,7 +79,7 @@ For more examples see `<examples.ipynb>`_ notebook.
 requirements
 ------------
 
-Python >= 3.5.
+Python version 3.5 or later.
 
 No other runtime dependencies.
 
