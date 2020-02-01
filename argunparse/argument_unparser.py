@@ -1,18 +1,22 @@
-"""class: ArgumentUnparser"""
+"""Argument unparser."""
 
+import logging
 import typing as t
+
+_LOG = logging.getLogger(__name__)
 
 
 def treat_as_option_with_no_value(value: t.Any) -> bool:
+    """Determine if an option should be treated as a flag with no value."""
     return value is True
 
 
 def option_should_be_skipped(value: t.Any) -> bool:
+    """Determine if an option should be skipped."""
     return value is False or value is None
 
 
 class ArgumentUnparser:
-
     """For performing reverse operation to what argparse.ArgumentParser does."""
 
     # pylint: disable=too-many-arguments
@@ -32,7 +36,7 @@ class ArgumentUnparser:
         self._begin_delim = begin_delim
         self._end_delim = end_delim
 
-    def unparse_arg(self, arg: t.Any) -> str:
+    def unparse_arg(self, arg: t.Any) -> str:  # pylint: disable = no-self-use
         """Convert an object into a string that can be used as a command-line argument."""
         if not isinstance(arg, str):
             arg = str(arg)
@@ -48,9 +52,11 @@ class ArgumentUnparser:
         unparsed = []
         for arg in arguments:
             unparsed.append(self.unparse_arg(arg))
-        if to_list:
-            return unparsed
-        return ' '.join(unparsed)
+        _LOG.debug('%s: unparsed args to %s', self, unparsed)
+        if not to_list:
+            unparsed = ' '.join(unparsed)
+        _LOG.debug('%s: converted unparsed args to string "%s"', self, unparsed)
+        return unparsed
 
     def unparse_option(self, key: str, value: t.Any,
                        *, to_list: bool = False) -> t.Union[str, t.List[str]]:
@@ -84,9 +90,11 @@ class ArgumentUnparser:
                 unparsed += unparsed_option
             else:
                 unparsed.append(unparsed_option)
-        if to_list:
-            return unparsed
-        return ' '.join(unparsed)
+        _LOG.debug('%s: unparsed options to %s', self, unparsed)
+        if not to_list:
+            unparsed = ' '.join(unparsed)
+        _LOG.debug('%s: converted unparsed options to string "%s"', self, unparsed)
+        return unparsed
 
     def unparse_options_and_args(self, options: t.Mapping[str, t.Any], arguments: t.Sequence[t.Any],
                                  *, to_list: bool = False) -> t.Union[str, t.List[str]]:
@@ -123,3 +131,7 @@ class ArgumentUnparser:
         This process is a reverse of what built-in argparse module does with parse_args() method.
         """
         return self.unparse_options_and_args(kwargs, args)
+
+    def __str__(self):
+        return f'{type(self).__name__}(short="{self._short_opt}",long="{self._long_opt}",' \
+            f'value="{self._opt_value}")'
