@@ -79,7 +79,7 @@ For more examples see `<examples.ipynb>`_ notebook.
 requirements
 ------------
 
-Python version 3.5 or later.
+Python version 3.8 or later.
 
 No other runtime dependencies.
 
