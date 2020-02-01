@@ -1,4 +1,8 @@
 language: generic
+addons:
+  homebrew:
+    packages:
+      - pyenv
 matrix:
   include:
     - os: linux
