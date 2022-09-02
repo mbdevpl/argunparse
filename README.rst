@@ -14,14 +14,6 @@ Reversed argparse: generate string of command-line args from Python objects.
     :target: https://pypi.python.org/pypi/argunparse
     :alt: package version from PyPI
 
-.. image:: https://travis-ci.org/mbdevpl/argunparse.svg?branch=master
-    :target: https://travis-ci.org/mbdevpl/argunparse
-    :alt: build status from Travis CI
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/mbdevpl/argunparse?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/mbdevpl/argunparse
-    :alt: build status from AppVeyor
-
 .. image:: https://api.codacy.com/project/badge/Grade/fd6a7e9ac9324d9f9b5d1e77d10000e4
     :target: https://www.codacy.com/app/mbdevpl/argunparse
     :alt: grade from Codacy
