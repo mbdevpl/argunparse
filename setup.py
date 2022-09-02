@@ -7,7 +7,7 @@ class Package(setup_boilerplate.Package):
     """Package metadata."""
 
     name = 'argunparse'
-    description = 'argunparse is intended to perform approximate reverse of argparse'
+    description = 'Reversed argparse: generate string of command-line args from Python objects.'
     url = 'https://github.com/mbdevpl/argunparse'
     classifiers = [
         'Development Status :: 4 - Beta',
