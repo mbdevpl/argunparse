@@ -82,7 +82,7 @@ class ArgumentUnparser:
     def unparse_options(self, options: t.Mapping[str, t.Any],
                         *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert dictionary to string of command-line args."""
-        unparsed_list: list[str] = []
+        unparsed_list: t.List[str] = []
         for key, value in options.items():
             if option_should_be_skipped(value):
                 continue
