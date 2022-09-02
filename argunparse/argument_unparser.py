@@ -49,12 +49,13 @@ class ArgumentUnparser:
     def unparse_args(self, arguments: t.Sequence[t.Any],
                      *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert list to string of command-line args."""
-        unparsed = []
+        unparsed_list = []
         for arg in arguments:
-            unparsed.append(self.unparse_arg(arg))
-        _LOG.debug('%s: unparsed args to %s', self, unparsed)
-        if not to_list:
-            unparsed = ' '.join(unparsed)
+            unparsed_list.append(self.unparse_arg(arg))
+        _LOG.debug('%s: unparsed args to %s', self, unparsed_list)
+        if to_list:
+            return unparsed_list
+        unparsed = ' '.join(unparsed_list)
         _LOG.debug('%s: converted unparsed args to string "%s"', self, unparsed)
         return unparsed
 
@@ -63,7 +64,7 @@ class ArgumentUnparser:
         """Convert a key-value pair into a string that can be used as a command-line option."""
         if option_should_be_skipped(value):
             return [] if to_list else ''
-        unparsed_key = '{}{}'.format(self._long_opt if len(key) > 1 else self._short_opt, key)
+        unparsed_key = f'{self._long_opt if len(key) > 1 else self._short_opt}{key}'
         if not treat_as_option_with_no_value(value):
             unparsed_value = self.unparse_arg(value)
         if to_list and (self._opt_value == ' ' or treat_as_option_with_no_value(value)):
@@ -71,7 +72,7 @@ class ArgumentUnparser:
                 return [unparsed_key]
             return [unparsed_key, unparsed_value]
         if not treat_as_option_with_no_value(value):
-            unparsed_option = '{}{}{}'.format(unparsed_key, self._opt_value, unparsed_value)
+            unparsed_option = f'{unparsed_key}{self._opt_value}{unparsed_value}'
         if to_list:
             return [unparsed_option]
         if treat_as_option_with_no_value(value):
@@ -81,18 +82,20 @@ class ArgumentUnparser:
     def unparse_options(self, options: t.Mapping[str, t.Any],
                         *, to_list: bool = False) -> t.Union[str, t.List[str]]:
         """Convert dictionary to string of command-line args."""
-        unparsed = []
+        unparsed_list: list[str] = []
         for key, value in options.items():
             if option_should_be_skipped(value):
                 continue
             unparsed_option = self.unparse_option(key, value, to_list=to_list)
             if to_list:
-                unparsed += unparsed_option
+                unparsed_list += unparsed_option
             else:
-                unparsed.append(unparsed_option)
-        _LOG.debug('%s: unparsed options to %s', self, unparsed)
-        if not to_list:
-            unparsed = ' '.join(unparsed)
+                assert isinstance(unparsed_option, str), type(unparsed_option)
+                unparsed_list.append(unparsed_option)
+        _LOG.debug('%s: unparsed options to %s', self, unparsed_list)
+        if to_list:
+            return unparsed_list
+        unparsed = ' '.join(unparsed_list)
         _LOG.debug('%s: converted unparsed options to string "%s"', self, unparsed)
         return unparsed
 
