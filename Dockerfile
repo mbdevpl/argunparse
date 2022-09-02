@@ -30,16 +30,6 @@ RUN set -Eeuxo pipefail && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% addgroup --gid % group% && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
 
-# install dependencies
-
-RUN set -Eeuxo pipefail && \
-  apt-get update && \
-  apt-get install --no-install-recommends -y \
-    git && \
-  apt-get -qy autoremove && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
-
 # prepare argunparse for testing
 
 WORKDIR /home/user/argunparse
