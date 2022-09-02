@@ -34,6 +34,9 @@ Reversed argparse: generate string of command-line args from Python objects.
 The *argunparse* is intended to perform an approximate reverse of what *argparse* does. In short:
 generating string (or a list of strings) of command-line arguments from a dict and/or a list.
 
+.. contents::
+    :backlinks: none
+
 
 How to use
 ==========
