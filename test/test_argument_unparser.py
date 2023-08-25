@@ -2,7 +2,6 @@
 """Tests for ArgumentUnparser class."""
 
 import itertools
-import logging
 import sys
 import unittest
 
@@ -10,8 +9,6 @@ from argunparse.argument_unparser import ArgumentUnparser
 from .examples import \
     OPTIONS, OPTIONS_VARIANTS, OPTIONS_SKIPPED, OPTIONS_SKIPPED_VARIANTS, \
     ARGUMENTS, ARGUMENTS_VARIANTS, OPTIONS_AND_ARGUMENTS_VARIANTS
-
-_LOG = logging.getLogger(__name__)
 
 
 class Tests(unittest.TestCase):
