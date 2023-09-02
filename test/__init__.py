@@ -1,5 +1,7 @@
 """Initialization of tests of argunparse package."""
 
+import logging
+
 import boilerplates.logging
 
 
@@ -10,3 +12,4 @@ class TestsLogging(boilerplates.logging.Logging):
 
 
 TestsLogging.configure()
+logging.getLogger('argunparse.argument_unparser').setLevel(logging.INFO)
