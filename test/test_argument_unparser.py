@@ -124,5 +124,6 @@ class Tests(unittest.TestCase):
 
     def test_unparse_nothing(self):
         unparser = ArgumentUnparser()
+        _LOG.debug('testing unparsing nothing for: %s', unparser)
         self.assertEqual(unparser.unparse(), '')
         self.assertEqual(unparser.unparse_to_list(), [])
