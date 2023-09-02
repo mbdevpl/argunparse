@@ -3,7 +3,6 @@
 
 import itertools
 import logging
-import sys
 import unittest
 
 from argunparse.argument_unparser import ArgumentUnparser
@@ -117,13 +116,11 @@ class Tests(unittest.TestCase):
                 result = unparser.unparse(*args, **options)
                 for item in itertools.chain(reference_options, reference_args):
                     self.assertIn(item, result)
-                if sys.version_info[:2] >= (3, 6):
-                    self.assertEqual(
-                        ' '.join(itertools.chain(reference_options, reference_args)), result)
+                self.assertEqual(
+                    ' '.join(itertools.chain(reference_options, reference_args)), result)
                 list_result = unparser.unparse_to_list(*args, **options)
                 self.assertSetEqual(set(reference_options + reference_args), set(list_result))
-                if sys.version_info[:2] >= (3, 6):
-                    self.assertListEqual(reference_options + reference_args, list_result)
+                self.assertListEqual(reference_options + reference_args, list_result)
 
     def test_unparse_nothing(self):
         unparser = ArgumentUnparser()
