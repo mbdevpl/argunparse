@@ -1,7 +1,7 @@
 -r requirements_test.txt
 codecov ~= 2.1
-coverage ~= 6.2
-flake518 ~= 1.2
-mypy ~= 0.930
-pydocstyle ~= 6.1
-pylint ~= 2.12
+coverage ~= 7.2
+flake518 ~= 1.6; python_version >= '3.9'
+mypy ~= 1.5
+pydocstyle ~= 6.3
+pylint ~= 2.17
