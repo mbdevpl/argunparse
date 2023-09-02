@@ -2,6 +2,14 @@
 
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
-logging.getLogger().setLevel(logging.WARNING)
-logging.getLogger('argunparse').setLevel(logging.INFO)
+import boilerplates.logging
+
+
+class TestsLogging(boilerplates.logging.Logging):
+    """Logging configuration for tests."""
+
+    packages = ['argunparse']
+
+
+TestsLogging.configure()
+logging.getLogger('argunparse.argument_unparser').setLevel(logging.INFO)

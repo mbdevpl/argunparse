@@ -3,7 +3,6 @@
 
 import itertools
 import logging
-import sys
 import unittest
 
 from argunparse.argument_unparser import ArgumentUnparser
@@ -51,6 +50,8 @@ class Tests(unittest.TestCase):
                 self.assertListEqual(reference.split('='), list_result)
 
     def test_options(self):
+        _LOG.debug('testing %i option variants...',
+                   len(OPTIONS_VARIANTS) + len(OPTIONS_SKIPPED_VARIANTS))
         unparser = ArgumentUnparser()
         for reference, options in itertools.chain(OPTIONS_VARIANTS, OPTIONS_SKIPPED_VARIANTS):
             with self.subTest(options=options):
@@ -60,6 +61,8 @@ class Tests(unittest.TestCase):
                 self.assertListEqual(reference, list_result)
 
     def test_options_space(self):
+        _LOG.debug('testing %i option variants...',
+                   len(OPTIONS_VARIANTS) + len(OPTIONS_SKIPPED_VARIANTS))
         unparser = ArgumentUnparser(opt_value=' ')
         for reference, options in itertools.chain(OPTIONS_VARIANTS, OPTIONS_SKIPPED_VARIANTS):
             with self.subTest(options=options):
@@ -113,13 +116,11 @@ class Tests(unittest.TestCase):
                 result = unparser.unparse(*args, **options)
                 for item in itertools.chain(reference_options, reference_args):
                     self.assertIn(item, result)
-                if sys.version_info[:2] >= (3, 6):
-                    self.assertEqual(
-                        ' '.join(itertools.chain(reference_options, reference_args)), result)
+                self.assertEqual(
+                    ' '.join(itertools.chain(reference_options, reference_args)), result)
                 list_result = unparser.unparse_to_list(*args, **options)
                 self.assertSetEqual(set(reference_options + reference_args), set(list_result))
-                if sys.version_info[:2] >= (3, 6):
-                    self.assertListEqual(reference_options + reference_args, list_result)
+                self.assertListEqual(reference_options + reference_args, list_result)
 
     def test_unparse_nothing(self):
         unparser = ArgumentUnparser()
