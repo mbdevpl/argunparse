@@ -30,7 +30,7 @@ RUN set -Eeuxo pipefail && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% addgroup --gid % group% && \
   echo ${AUX_GROUP_IDS} | xargs -n1 echo | xargs -I% usermod --append --groups group% user
 
-# prepare argunparse for testing
+# install dependencies
 
 WORKDIR /home/user/argunparse
 
@@ -38,6 +38,8 @@ COPY --chown=${USER_ID}:${GROUP_ID} requirements*.txt ./
 
 RUN set -Eeuxo pipefail && \
   pip3 install --no-cache-dir -r requirements_ci.txt
+
+# prepare argunparse for testing
 
 USER user
 
