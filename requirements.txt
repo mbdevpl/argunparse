@@ -1,1 +1,1 @@
-version-query ~= 1.5
+version-query ~= 1.6
