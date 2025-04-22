@@ -19,11 +19,10 @@ def option_should_be_skipped(value: t.Any) -> bool:
 class ArgumentUnparser:
     """For performing reverse operation to what argparse.ArgumentParser does."""
 
-    # pylint: disable = too-many-arguments
+    # pylint: disable = too-many-arguments, too-many-positional-arguments
     def __init__(
             self, short_opt: str = '-', long_opt: str = '--', opt_value: str = '=',
             begin_delim: str = '"', end_delim: str = '"') -> None:
-
         assert isinstance(short_opt, str)
         assert isinstance(long_opt, str)
         assert isinstance(opt_value, str)
