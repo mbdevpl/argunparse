@@ -79,7 +79,7 @@ For more examples see `<examples.ipynb>`_ notebook.
 Requirements
 ============
 
-Python version 3.8 or later.
+Python version 3.11 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
 
