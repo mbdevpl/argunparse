@@ -24,30 +24,30 @@ class Tests(unittest.TestCase):
         for reference, option in OPTIONS.items():
             with self.subTest(option=option):
                 key, value = list(*itertools.chain(option.items()))
+                list_result = unparser.unparse_option_to_list(key, value)
+                self.assertListEqual([reference], list_result)
                 result = unparser.unparse_option(key, value)
                 self.assertEqual(reference, result)
-                list_result = unparser.unparse_option(key, value, to_list=True)
-                self.assertListEqual([reference], list_result)
 
     def test_option_skipped(self):
         unparser = ArgumentUnparser()
         for option in OPTIONS_SKIPPED.items():
             with self.subTest(option=option):
                 key, value = option
+                list_result = unparser.unparse_option_to_list(key, value)
+                self.assertListEqual(list_result, [])
                 result = unparser.unparse_option(key, value)
                 self.assertEqual(result, '')
-                list_result = unparser.unparse_option(key, value, to_list=True)
-                self.assertListEqual(list_result, [])
 
     def test_option_space(self):
         unparser = ArgumentUnparser(opt_value=' ')
         for reference, option in OPTIONS.items():
             with self.subTest(option=option):
                 key, value = list(*itertools.chain(option.items()))
+                list_result = unparser.unparse_option_to_list(key, value)
+                self.assertListEqual(reference.split('='), list_result)
                 result = unparser.unparse_option(key, value)
                 self.assertEqual(reference.replace('=', ' '), result)
-                list_result = unparser.unparse_option(key, value, to_list=True)
-                self.assertListEqual(reference.split('='), list_result)
 
     def test_options(self):
         _LOG.debug('testing %i option variants...',
@@ -55,10 +55,10 @@ class Tests(unittest.TestCase):
         unparser = ArgumentUnparser()
         for reference, options in itertools.chain(OPTIONS_VARIANTS, OPTIONS_SKIPPED_VARIANTS):
             with self.subTest(options=options):
+                list_result = unparser.unparse_options_to_list(options)
+                self.assertListEqual(reference, list_result)
                 result = unparser.unparse_options(options)
                 self.assertEqual(' '.join(reference), result)
-                list_result = unparser.unparse_options(options, to_list=True)
-                self.assertListEqual(reference, list_result)
 
     def test_options_space(self):
         _LOG.debug('testing %i option variants...',
@@ -68,7 +68,7 @@ class Tests(unittest.TestCase):
             with self.subTest(options=options):
                 result = unparser.unparse_options(options)
                 self.assertEqual(' '.join(reference).replace('=', ' '), result)
-                list_result = unparser.unparse_options(options, to_list=True)
+                list_result = unparser.unparse_options_to_list(options)
                 fixed_reference = list(itertools.chain.from_iterable(
                     [_.split('=') if '=' in _ else [_] for _ in reference]))
                 self.assertListEqual(fixed_reference, list_result)
@@ -84,30 +84,30 @@ class Tests(unittest.TestCase):
         unparser = ArgumentUnparser()
         for reference, args in ARGUMENTS_VARIANTS:
             with self.subTest(args=args):
+                list_result = unparser.unparse_args_to_list(args)
+                self.assertListEqual(reference, list_result)
                 result = unparser.unparse_args(args)
                 self.assertEqual(' '.join(reference), result)
-                list_result = unparser.unparse_args(args, to_list=True)
-                self.assertListEqual(reference, list_result)
 
     def test_options_and_args(self):
         unparser = ArgumentUnparser()
         for (reference_options, options), (reference_args, args) in OPTIONS_AND_ARGUMENTS_VARIANTS:
             with self.subTest(options=options, args=args):
+                list_result = unparser.unparse_options_and_args_to_list(None, args)
+                self.assertListEqual(reference_args, list_result)
                 result = unparser.unparse_options_and_args(None, args)
                 self.assertEqual(' '.join(reference_args), result)
-                list_result = unparser.unparse_options_and_args(None, args, to_list=True)
-                self.assertListEqual(reference_args, list_result)
 
+                list_result = unparser.unparse_options_and_args_to_list(options, None)
+                self.assertListEqual(reference_options, list_result)
                 result = unparser.unparse_options_and_args(options, None)
                 self.assertEqual(' '.join(reference_options), result)
-                list_result = unparser.unparse_options_and_args(options, None, to_list=True)
-                self.assertListEqual(reference_options, list_result)
 
+                list_result = unparser.unparse_options_and_args_to_list(options, args)
+                self.assertListEqual(reference_options + reference_args, list_result)
                 result = unparser.unparse_options_and_args(options, args)
                 self.assertEqual(
                     ' '.join(itertools.chain(reference_options, reference_args)), result)
-                list_result = unparser.unparse_options_and_args(options, args, to_list=True)
-                self.assertListEqual(reference_options + reference_args, list_result)
 
     def test_unparse(self):
         unparser = ArgumentUnparser()
