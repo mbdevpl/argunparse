@@ -3,13 +3,14 @@
 import collections
 import itertools
 import pathlib
+import typing as t
 
 _UNPARSER_INIT_ARGS_EXAMPLES = [
     ('short_opt', {'-', '--', '_', '__'}),
     ('long_opt', {'-', '--', '_', '__'}),
     ('opt_value', {'=', ' ', ''})]
 
-OPTIONS = {
+OPTIONS: dict[str, dict[str, t.Any]] = {
     '-h': {'h': True}, '--verbosity=100': {'verbosity': 100},
     '--DEFINE=NDEBUG': {'DEFINE': 'NDEBUG'},
     '--long_flag': {'long_flag': True}, '-o=out_file.txt': {'o': 'out_file.txt'},
@@ -34,8 +35,6 @@ ARGUMENTS = {
     (str(pathlib.Path('tmp', 'file')), pathlib.Path('tmp', 'file')), ('in_file.txt', 'in_file.txt'),
     ('-123456790', -123456790), (str(2**16), 2**16), ('x', 'x'), ('y', 'y'), ('z', 'z'),
     (repr('hello world'), 'hello world')}
-
-ARGUMENTS_SKIPPED = {}
 
 ARGUMENTS_VARIANTS = [([ref1, ref2], [arg1, arg2])
                       for ((ref1, arg1), (ref2, arg2)) in itertools.permutations(ARGUMENTS, 2)]
